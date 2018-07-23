@@ -1,0 +1,11 @@
+version: '2'
+services:
+    vb0115application-postgresql:
+        image: postgres:10.4
+        # volumes:
+        #     - ~/volumes/jhipster/Vb0115Application/postgresql/:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=Vb0115Application
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
