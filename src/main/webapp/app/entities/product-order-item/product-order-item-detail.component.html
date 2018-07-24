@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="productOrderItem">
+            <h2><span>Product Order Item</span> {{productOrderItem.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Quantity</span></dt>
+                <dd>
+                    <span>{{productOrderItem.quantity}}</span>
+                </dd>
+                <dt><span>Calculated Price</span></dt>
+                <dd>
+                    <span>{{productOrderItem.calculatedPrice}}</span>
+                </dd>
+                <dt><span>Product</span></dt>
+                <dd>
+                    <div *ngIf="productOrderItem.product">
+                        <a [routerLink]="['/product', productOrderItem.product?.id, 'view']">{{productOrderItem.product?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span>Order</span></dt>
+                <dd>
+                    <div *ngIf="productOrderItem.order">
+                        <a [routerLink]="['/product-order', productOrderItem.order?.id, 'view']">{{productOrderItem.order?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/product-order-item', productOrderItem.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
