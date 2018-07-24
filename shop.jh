@@ -1,0 +1,66 @@
+/** Shop */
+
+entity ProductCategory {
+    name String required
+    description String
+}
+
+entity Product {
+    name String required
+    description String
+    price BigDecimal required min(0)
+    image ImageBlob
+    status ProductStatus required
+}
+
+enum ProductStatus {
+    AVAILABLE, OUT_OF_STOCK
+}
+
+entity Customer {
+    phone String required
+    addressLine String required
+    postcode String required 
+    city String required
+}
+
+entity ProductOrder {
+    placedDate Instant required
+    remarks String
+}
+
+entity ProductOrderItem {
+    quantity Integer required min(0)
+    calculatedPrice BigDecimal required min(0)
+}
+
+entity Invoice {
+    date Instant required
+    details String
+    status InvoiceStatus required
+    paymentDate Instant required
+    paymentAmount BigDecimal required
+}
+enum InvoiceStatus {
+    ISSUED, PAID, CANCELLED
+}
+
+entity Shipment {
+    date Instant required
+    details String
+}
+relationship OneToOne {
+    Customer{user(login)} to User
+}
+relationship ManyToOne {
+    ProductOrderItem{product(name)} to Product
+}
+relationship OneToMany {
+   Customer{order} to ProductOrder{customer},
+   ProductOrder{orderItem} to ProductOrderItem{order},
+   ProductOrder{invoice} to Invoice{order},
+   Invoice{shipment} to Shipment{invoice},
+   ProductCategory{product} to Product{productCategory(name)}
+}
+service * with serviceClass
+paginate ProductCategory, Product, Customer, ProductOrder, ProductOrderItem, Invoice, Shipment with pagination
